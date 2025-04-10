@@ -114,4 +114,17 @@ if config_env() == :prod do
   #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+
+  config :creepy_crawlie_cinema_club, CreepyCrawlieCinemaClub.Mailer,
+    adapter: Swoosh.Adapters.SMTP,
+    relay: "smtp.gmail.com",
+    port: 587,
+    ssl: false,
+    tls: :always,
+    auth: :always,
+    username: System.get_env("GMAIL_USERNAME"),
+    password: System.get_env("GMAIL_APP_PASSWORD")
+
+      # Configure Swoosh API client
+  config :swoosh, :api_client, Swoosh.ApiClient.Hackney
 end
