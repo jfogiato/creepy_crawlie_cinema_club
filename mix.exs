@@ -49,6 +49,7 @@ defmodule CreepyCrawlieCinemaClub.MixProject do
        sparse: "optimized",
        app: false,
        compile: false,
+       runtime: false,
        depth: 1},
       {:swoosh, "~> 1.5"},
       {:finch, "~> 0.13"},
