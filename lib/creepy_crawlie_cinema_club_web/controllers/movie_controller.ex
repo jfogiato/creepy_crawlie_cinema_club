@@ -4,7 +4,6 @@ defmodule CreepyCrawlieCinemaClubWeb.MovieController do
   alias CreepyCrawlieCinemaClub.Movies
   alias CreepyCrawlieCinemaClub.Movies.Movie
   alias CreepyCrawlieCinemaClub.Comments
-  alias CreepyCrawlieCinemaClub.Comments.Comment
 
   def index(conn, _params) do
     movies = Movies.list_movies()

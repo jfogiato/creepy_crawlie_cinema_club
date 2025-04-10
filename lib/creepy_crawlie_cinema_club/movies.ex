@@ -138,4 +138,19 @@ defmodule CreepyCrawlieCinemaClub.Movies do
     from(u in Upvote, where: u.movie_id == ^movie_id)
     |> Repo.aggregate(:count, :id)
   end
+
+  @doc """
+  Picks a random movie from all UNWATCHED movies.
+  """
+  def pick_random_movie do
+    import Ecto.Query
+
+    query =
+      from m in Movie,
+        where: m.watched == false,
+        order_by: fragment("RANDOM()"),
+        limit: 1
+
+    Repo.one(query)
+  end
 end

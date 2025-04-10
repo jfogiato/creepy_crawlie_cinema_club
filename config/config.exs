@@ -32,7 +32,26 @@ config :creepy_crawlie_cinema_club, CreepyCrawlieCinemaClubWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :creepy_crawlie_cinema_club, CreepyCrawlieCinemaClub.Mailer, adapter: Swoosh.Adapters.Local
+# Configure Swoosh with your SMTP settings or another adapter.
+config :creepy_crawlie_cinema_club, CreepyCrawlieCinemaClub.Mailer,
+  adapter: Swoosh.Adapters.SMTP,
+  relay: "smtp.gmail.com",
+  port: 587,
+  ssl: false,
+  tls: :always,
+  auth: :always,
+  username: System.get_env("GMAIL_USERNAME"),
+  password: System.get_env("GMAIL_APP_PASSWORD")
+
+# Configure the weekly email recipients.
+config :creepy_crawlie_cinema_club, :weekly_email_recipients,
+  [
+    "joe.fogiato@gmail.com",
+    "armandalore@gmail.com",
+    "cszerenyi@gmail.com",
+    "azarate32@gmail.com",
+    "luisgportillo8191@gmail.com"
+  ]
 
 # Configure esbuild (the version is required)
 config :esbuild,
@@ -60,6 +79,18 @@ config :tailwind,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+# Configure Oban
+config :creepy_crawlie_cinema_club, Oban,
+repo: CreepyCrawlieCinemaClub.Repo,
+queues: [default: 10],
+plugins: [
+  {Oban.Plugins.Cron,
+    crontab: [
+       # "0 21 * * 5" fires every Friday at 21:00 UTC (i.e. 9pm UTC/5pm EST)
+       {"0 21 * * 5", CreepyCrawlieCinemaClub.Jobs.WeeklyEmail}
+    ]}
+]
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason

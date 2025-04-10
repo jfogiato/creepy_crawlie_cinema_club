@@ -17,7 +17,8 @@ defmodule CreepyCrawlieCinemaClub.Application do
       # Start a worker by calling: CreepyCrawlieCinemaClub.Worker.start_link(arg)
       # {CreepyCrawlieCinemaClub.Worker, arg},
       # Start to serve requests, typically the last entry
-      CreepyCrawlieCinemaClubWeb.Endpoint
+      CreepyCrawlieCinemaClubWeb.Endpoint,
+      {Oban, Application.fetch_env!(:creepy_crawlie_cinema_club, Oban)},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
