@@ -50,6 +50,7 @@ defmodule CreepyCrawlieCinemaClub.MixProject do
        app: false,
        compile: false,
        runtime: false,
+       override: true,
        depth: 1},
       {:swoosh, "~> 1.5"},
       {:finch, "~> 0.13"},
