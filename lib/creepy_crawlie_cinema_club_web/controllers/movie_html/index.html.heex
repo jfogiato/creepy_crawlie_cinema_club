@@ -1,0 +1,43 @@
+<.header>
+  Here are all the movies we have to watch!
+  <:actions>
+    <.link href={~p"/movies/new"}>
+      <.button>New Movie</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="movies" rows={@movies} row_click={&JS.navigate(~p"/movies/#{&1}")}>
+  <:col :let={movie} label="Submitted by">{movie.username}</:col>
+  <:col :let={movie} label="Title">{movie.title}</:col>
+  <:col :let={movie} label="Genre">{movie.genre}</:col>
+  <:col :let={movie} label="Note">{movie.note}</:col>
+  <:col :let={movie} label="Upvotes">{CreepyCrawlieCinemaClub.Movies.get_upvotes_count(movie.id)}</:col>
+  <:col :let={movie} label="Watched">{movie.watched}</:col>
+<:col :let={movie} label="Actions">
+  <%= if movie.username == @current_username do %>
+    <div class="action-links">
+      <.link
+        navigate={~p"/movies/#{movie}/edit"}
+        class="action-link edit-link"
+      >
+        Edit
+      </.link>
+      <.link 
+        href={~p"/movies/#{movie}"}
+        method="delete"
+        data-confirm="Are you sure?"
+        class="action-link delete-link"
+      >
+        Delete
+      </.link>
+    </div>
+  <% else %>
+    <div
+      class="text-gray-400"
+    >
+      None
+    </div>
+  <% end %>
+</:col>
+</.table>

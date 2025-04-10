@@ -1,0 +1,85 @@
+<.back navigate={~p"/movies"}>Back to movies</.back>
+
+<.header>
+  {@movie.title}
+  <:subtitle>{@movie.note}</:subtitle>
+  <:actions>
+    <%= if @movie.username == @current_username do %>
+      <.link href={~p"/movies/#{@movie}/edit"}>
+        <.button>Edit movie</.button>
+      </.link>
+    <% end %>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Username">{@movie.username}</:item>
+  <:item title="Title">{@movie.title}</:item>
+  <:item title="Genre">{@movie.genre}</:item>
+  <:item title="Upvotes">
+    <%= if @user_upvoted do %>
+      <.link 
+        href={~p"/movies/#{@movie}/upvote"} 
+        method="delete" 
+        class="text-red-600 hover:underline"
+      >
+        Remove Upvote
+      </.link>
+    <% else %>
+      <.link 
+        href={~p"/movies/#{@movie}/upvote"} 
+        method="post" 
+        class="text-blue-600 hover:underline"
+      >
+        Upvote
+      </.link>
+    <% end %>
+    <span> (<%= CreepyCrawlieCinemaClub.Movies.get_upvotes_count(@movie.id) %> Upvotes)</span>
+  </:item>
+  <:item title="Watched">{@movie.watched}</:item>
+</.list>
+
+<hr />
+
+<div class="comments-section">
+  <h2 class="text-xl mb-2 mt-5">Comments</h2>
+  <div class="mt-4 space-y-4">
+    <%= for comment <- @comments do %>
+      <div id={"comment-#{comment.id}"} class="border p-2 rounded">
+        <p>
+          <strong><%= comment.username %>:</strong>
+          <%= comment.body %>
+        </p>
+        <div class="text-sm mt-1">
+          <%= if comment.username == @current_username do %>
+            <.link href={~p"/movies/#{@movie.id}/comments/#{comment.id}/edit"} class="text-blue-600 hover:underline">
+              Edit
+            </.link>
+            <.link 
+              href={~p"/movies/#{@movie.id}/comments/#{comment.id}"} 
+              method="delete" 
+              data-confirm="Are you sure?" 
+              class="text-red-600 hover:underline ml-2"
+            >
+              Delete
+            </.link>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+    
+  <.simple_form for={@comment_changeset} action={~p"/movies/#{@movie}/comments"} :let={f}>
+    <.input 
+      field={f[:username]} 
+      type="text" 
+      label="Username" 
+      value={@current_username} 
+      readonly
+    />
+    <.input field={f[:body]} type="textarea" label="Comment" />
+    <:actions>
+      <.button>Post Comment</.button>
+    </:actions>
+  </.simple_form>
+</div>

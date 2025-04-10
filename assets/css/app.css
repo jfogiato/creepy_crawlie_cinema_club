@@ -2,4 +2,31 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* This file is for your main application CSS */
+.action-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.action-link {
+  text-decoration: none;
+}
+
+.edit-link {
+  color: blue;
+  font-weight: 500;
+  font-weight: 500;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+}
+
+.delete-link {
+  color: red;
+  font-weight: 500;
+}
+
+.delete-link:hover {
+  text-decoration: underline;
+}

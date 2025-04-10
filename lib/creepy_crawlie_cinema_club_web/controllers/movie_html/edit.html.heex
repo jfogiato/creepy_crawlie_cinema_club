@@ -1,0 +1,8 @@
+<.back navigate={~p"/movies"}>Back to movies</.back>
+
+<.header>
+  Edit {@movie.title}
+</.header>
+
+<.movie_form changeset={@changeset} action={~p"/movies/#{@movie}"} />
+

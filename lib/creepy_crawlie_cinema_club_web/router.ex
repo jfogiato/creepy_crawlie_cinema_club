@@ -18,6 +18,16 @@ defmodule CreepyCrawlieCinemaClubWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+
+    resources "/movies", MovieController do
+      resources "/comments", CommentController, only: [:create, :edit, :update, :delete]
+      post "/upvote", MovieController, :upvote, as: :upvote
+      delete "/upvote", MovieController, :unvote, as: :unvote
+      resources "/comments", CommentController, only: [:create, :index]
+    end
+
+    get "/watched", MovieController, :watched
   end
 
   # Other scopes may use custom stacks.

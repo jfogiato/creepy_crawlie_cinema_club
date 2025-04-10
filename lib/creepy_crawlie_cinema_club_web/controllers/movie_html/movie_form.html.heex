@@ -1,0 +1,26 @@
+<.simple_form :let={f} for={@changeset} action={@action}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input
+    field={f[:username]}
+    type="text"
+    label="Username"
+    readonly={@changeset.data.username && @changeset.data.username != ""}
+  />
+  <.input field={f[:title]} type="text" label="Movie Title" />
+  <.input field={f[:genre]} type="text" label="Genre" />
+  <.input field={f[:note]} type="text" label="Note(s)" />
+  <%= if @changeset.data.id do %>
+    <.input
+      field={f[:upvotes]}
+      type="number"
+      label="Upvotes"
+      readonly={@changeset.data.username && @changeset.data.username != ""}
+    />
+    <.input field={f[:watched]} type="checkbox" label="Watched" />
+  <% end %>
+  <:actions>
+    <.button>Save Movie</.button>
+  </:actions>
+</.simple_form>

@@ -1,0 +1,8 @@
+<.back navigate={~p"/movies/#{@comment.movie_id}"}>Back to comments</.back>
+
+<.header>
+  Edit Comment
+</.header>
+
+<.comment_form changeset={@changeset} action={~p"/movies/#{@comment.movie_id}/comments/#{@comment}"} />
+
